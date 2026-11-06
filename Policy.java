@@ -1,44 +1,54 @@
 public class Policy {
-    // Private fields to maintain encapsulation
-    private int policyNumber;      // Holds the policy number
-    private String providerName;   // Holds the insurance provider's name
-    private String firstName;      // Holds the policyholder's first name
-    private String lastName;       // Holds the policyholder's last name
-    private int age;               // Holds the policyholder's age
-    private String smokingStatus;  // Holds the policyholder's smoking status
-    private double height;         // Holds the policyholder's height in inches
-    private double weight;         // Holds the policyholder's weight in pounds
+    private int policyNumber;
+    private String providerName;
+    
+    // Step 4: Class collaboration (Aggregation) - Policy has a PolicyHolder
+    private PolicyHolder holder; 
+    
+    // Step 3: Static field to keep track of the number of Policy objects created
+    private static int policyCount = 0; 
 
-    // Constructor to initialize the Policy object with data
-    public Policy(int policyNumber, String providerName, String firstName, String lastName, 
-                  int age, String smokingStatus, double height, double weight) {
-        this.policyNumber = policyNumber;     // Assign parameter to instance variable
-        this.providerName = providerName;     // Assign parameter to instance variable
-        this.firstName = firstName;           // Assign parameter to instance variable
-        this.lastName = lastName;             // Assign parameter to instance variable
-        this.age = age;                       // Assign parameter to instance variable
-        this.smokingStatus = smokingStatus;   // Assign parameter to instance variable
-        this.height = height;                 // Assign parameter to instance variable
-        this.weight = weight;                 // Assign parameter to instance variable
+    // Constructor
+    public Policy(int policyNumber, String providerName, PolicyHolder holder) {
+        this.policyNumber = policyNumber;
+        this.providerName = providerName;
+        // Step 5: Create a deep copy to minimize security holes
+        this.holder = new PolicyHolder(holder); 
+        policyCount++; // Increment static field
     }
 
-    // Accessor (Getter) Methods to retrieve private data
+    // Accessors and Mutators
     public int getPolicyNumber() { return policyNumber; }
-    public String getProviderName() { return providerName; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public int getAge() { return age; }
-    public String getSmokingStatus() { return smokingStatus; }
-    public double getHeight() { return height; }
-    public double getWeight() { return weight; }
-
-    // Mutator (Setter) Methods to update private data
     public void setPolicyNumber(int policyNumber) { this.policyNumber = policyNumber; }
+    public String getProviderName() { return providerName; }
     public void setProviderName(String providerName) { this.providerName = providerName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setAge(int age) { this.age = age; }
-    public void setSmokingStatus(String smokingStatus) { this.smokingStatus = smokingStatus; }
-    public void setHeight(double height) { this.height = height; }
-    public void setWeight(double weight) { this.weight = weight; }
+    
+    // Step 5: Return a copy of the PolicyHolder to prevent security holes
+    public PolicyHolder getPolicyHolder() { return new PolicyHolder(holder); }
+    public void setPolicyHolder(PolicyHolder holder) { this.holder = new PolicyHolder(holder); }
+
+    // Static method to return the count
+    public static int getPolicyCount() {
+        return policyCount;
+    }
+
+    // Calculates the price of the policy
+    public double getPrice() {
+        double price = 600.0;
+        if (holder.getAge() > 50) price += 75.0;
+        if (holder.getSmokingStatus().equalsIgnoreCase("smoker")) price += 100.0;
+        if (holder.getBMI() > 35) {
+            price += (holder.getBMI() - 35) * 20.0;
+        }
+        return price;
+    }
+
+    // Step 2 & 6: toString implicitly calls the PolicyHolder's toString
+    public String toString() {
+        return String.format("Policy Number: %d\n" +
+                             "Provider Name: %s\n" +
+                             "%s\n" + // This calls holder.toString()
+                             "Policy Price: $%.2f", 
+                             policyNumber, providerName, holder.toString(), getPrice());
+    }
 }
