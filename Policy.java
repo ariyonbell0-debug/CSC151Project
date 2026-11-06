@@ -1,131 +1,44 @@
 public class Policy {
-    private String policyNumber;
-    private String providerName;
-    private String firstName;
-    private String lastName;
-    private int age;
-    private String smokingStatus;
-    private double height;
-    private double weight;
+    // Private fields to maintain encapsulation
+    private int policyNumber;      // Holds the policy number
+    private String providerName;   // Holds the insurance provider's name
+    private String firstName;      // Holds the policyholder's first name
+    private String lastName;       // Holds the policyholder's last name
+    private int age;               // Holds the policyholder's age
+    private String smokingStatus;  // Holds the policyholder's smoking status
+    private double height;         // Holds the policyholder's height in inches
+    private double weight;         // Holds the policyholder's weight in pounds
 
-    /**
-     * Default constructor that initializes fields to default values.
-     */
-    public Policy() {
-        policyNumber = "";
-        providerName = "";
-        firstName = "";
-        lastName = "";
-        age = 0;
-        smokingStatus = "non-smoker";
-        height = 0.0;
-        weight = 0.0;
-    }
-
-    /**
-     * Constructor with arguments to initialize all policy fields.
-     * 
-     * @param policyNumber  The policy number
-     * @param providerName  The insurance provider name
-     * @param firstName     The policyholder's first name
-     * @param lastName      The policyholder's last name
-     * @param age           The policyholder's age
-     * @param smokingStatus The smoking status ("smoker" or "non-smoker")
-     * @param height        The height in inches
-     * @param weight        The weight in pounds
-     */
-    public Policy(String policyNumber, String providerName, String firstName, String lastName, 
+    // Constructor to initialize the Policy object with data
+    public Policy(int policyNumber, String providerName, String firstName, String lastName, 
                   int age, String smokingStatus, double height, double weight) {
-        this.policyNumber = policyNumber;
-        this.providerName = providerName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.smokingStatus = smokingStatus;
-        this.height = height;
-        this.weight = weight;
+        this.policyNumber = policyNumber;     // Assign parameter to instance variable
+        this.providerName = providerName;     // Assign parameter to instance variable
+        this.firstName = firstName;           // Assign parameter to instance variable
+        this.lastName = lastName;             // Assign parameter to instance variable
+        this.age = age;                       // Assign parameter to instance variable
+        this.smokingStatus = smokingStatus;   // Assign parameter to instance variable
+        this.height = height;                 // Assign parameter to instance variable
+        this.weight = weight;                 // Assign parameter to instance variable
     }
 
-    /**
-     * Calculates the Body Mass Index (BMI) of the policyholder.
-     * 
-     * @return The calculated BMI as a double
-     */
-    public double calculateBMI() {
-        return (weight * 703) / (height * height);
-    }
-
-    /**
-     * Calculates the monthly price of the insurance policy based on age, smoking status, and BMI.
-     * 
-     * @return The total policy price as a double
-     */
-    public double calculatePrice() {
-        double baseFee = 600.0;
-        double additionalFee = 0.0;
-
-        if (age > 50) {
-            additionalFee += 75.0;
-        }
-        if (smokingStatus.equalsIgnoreCase("smoker")) {
-            additionalFee += 100.0;
-        }
-        
-        double bmi = calculateBMI();
-        if (bmi > 25.0) {
-            additionalFee += (bmi - 25.0) * 20.0;
-        }
-
-        return baseFee + additionalFee;
-    }
-
-    // Getters and Setters with Javadocs
-
-    /**
-     * Gets the policy number.
-     * @return The policy number
-     */
-    public String getPolicyNumber() { return policyNumber; }
-
-    /**
-     * Gets the provider name.
-     * @return The provider name
-     */
+    // Accessor (Getter) Methods to retrieve private data
+    public int getPolicyNumber() { return policyNumber; }
     public String getProviderName() { return providerName; }
-
-    /**
-     * Gets the policyholder's first name.
-     * @return The first name
-     */
     public String getFirstName() { return firstName; }
-
-    /**
-     * Gets the policyholder's last name.
-     * @return The last name
-     */
     public String getLastName() { return lastName; }
-
-    /**
-     * Gets the policyholder's age.
-     * @return The age
-     */
     public int getAge() { return age; }
-
-    /**
-     * Gets the policyholder's smoking status.
-     * @return The smoking status
-     */
     public String getSmokingStatus() { return smokingStatus; }
-
-    /**
-     * Gets the policyholder's height.
-     * @return The height in inches
-     */
     public double getHeight() { return height; }
-
-    /**
-     * Gets the policyholder's weight.
-     * @return The weight in pounds
-     */
     public double getWeight() { return weight; }
+
+    // Mutator (Setter) Methods to update private data
+    public void setPolicyNumber(int policyNumber) { this.policyNumber = policyNumber; }
+    public void setProviderName(String providerName) { this.providerName = providerName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setAge(int age) { this.age = age; }
+    public void setSmokingStatus(String smokingStatus) { this.smokingStatus = smokingStatus; }
+    public void setHeight(double height) { this.height = height; }
+    public void setWeight(double weight) { this.weight = weight; }
 }
